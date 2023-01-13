@@ -15,7 +15,7 @@ margin-right: auto;
 align-items: center;
 margin-bottom: 30px;
 background-color: #FFFFFF;
-margin-top:10px;
+margin-top:20px;
 border: 0.7px #000;
 `;
 
@@ -24,8 +24,7 @@ const Input = styled.TextInput`
   font-size: 16px;
   color:#000000;
   margin-left:20px;
-  margin: auto;
-  
+  margin: auto;  
 `;
 
 export default ({placeholder, value, onChangeText, password, Icon, width, height, multiline, numberOfLines}) => {

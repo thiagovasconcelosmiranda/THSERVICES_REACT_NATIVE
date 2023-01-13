@@ -1,12 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Image} from 'react-native';
 import { useEffect, useState } from 'react';
 import Api from '../../Api';
 import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
-
-
 import {Container,
          LangView ,
          ButtonLang,
@@ -23,12 +20,10 @@ import {Container,
     } from'./style';
 
 import '../../utils/i18n';
-
 import { useTranslation } from 'react-i18next';
 import Alert from '../../components/Alert';
 
 export default () => {
-
 
   const [email, setEmail] = useState('');
   const [password, setPassoword] = useState('');
@@ -55,16 +50,14 @@ export default () => {
  },[]);
 
 
- //alert
  const alertMessage = (msg) =>{
   setMessage(msg);
   setStyleDisplay('flex');
   setTimeout(function(){
     setStyleDisplay('none');
-  },75000);
+  },82000);
   setState(false);
 }
-//
 
   const handleSignClick = async () => {
           setState(true);
@@ -74,7 +67,6 @@ export default () => {
             await AsyncStorage.setItem('token', res.data.token);
             navigation.navigate("MainTab");
           }else if(res.data.error){
-            //message incorrect
             alertMessage(res.data.error)
           }  
          }else{
@@ -97,7 +89,7 @@ export default () => {
           <LangView>
                <ButtonLang 
                  style={{ borderColor: currentLanguage === 'en' ? '#037CFC' : 'transparent'}}
-               onPress={()=>changeLanguage('en')}>
+                 onPress={()=>changeLanguage('en')}>
                  <ButtonLangText>Inglês</ButtonLangText>
                 </ButtonLang>
 
@@ -105,7 +97,6 @@ export default () => {
                  onPress={()=>changeLanguage('pt')}>
                      <ButtonLangText>Português Brasil</ButtonLangText>
                 </ButtonLang>
-            
           </LangView>
           <ImageView>
                 < Animatable.Image
@@ -116,11 +107,9 @@ export default () => {
                 <MessageText>{t('Seja bem vindo')}</MessageText>
           </ImageView>
           <Alert 
-            styleDisplay={styleDisplay}
-            message={message}
-            background='red'
-            />
-
+              styleDisplay={styleDisplay}
+              message={message}
+              background='red'/>
          <Animatable.View delay={600} animation="fadeInUp">
           <InputArea>
               <Input 

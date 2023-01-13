@@ -2,10 +2,9 @@ import  { Container,
           HeaderArea,
           LeftTouch,
           Title,
-          Imageback,
           ItemView
         } from'./style';
-import Favorite from '../../components/Favorite';
+import ListFavorite from '../../components/ListFavorite';
 import Left from 'react-native-vector-icons/AntDesign';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,32 +12,24 @@ import Api from '../../Api';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
 
-
 export default () => {
-
-  const navigation = useNavigation();
-
+   const navigation = useNavigation();
    const[list, setlist] = useState([]);
    const[deleteItem, setDeleteItem] = useState(false);
 
    useEffect(()=>{
       getFavorite();
-  
-  },[]);
+    },[]);
 
-  const getFavorite = async() => {
-      const token =  await AsyncStorage.getItem('token');  
+   const getFavorite = async() => {
+       const token =  await AsyncStorage.getItem('token');  
        if(token){
           const auth = await Api.getAuth(token);
           const favorite = await Api.getFavorite(auth.id, token);
-          
-            setDeleteItem(false);
-            setlist(favorite.data); 
-           
-          
-          
-      }
-}
+          setDeleteItem(false);
+          setlist(favorite.data);     
+       }
+   }
     const handleBbuttonDelete = async (item) =>{
           const token = await AsyncStorage.getItem('token');
           if(token){
@@ -71,11 +62,9 @@ export default () => {
                  style={{width: 80, height: 80}} />
                   )}
           <ItemView>
-        
               {list.map((item, k)=>(
-                <Favorite key={k} data={item}
-                  onPress={()=>handleBbuttonDelete(item)}/>
-           ))}
+                <ListFavorite key={k} data={item}
+                  onPress={()=>handleBbuttonDelete(item)}/>))}
           </ItemView>
         </Container>
     )

@@ -7,6 +7,7 @@ const Container = styled.SafeAreaView`
  background-color:#D3D3D3;
  height:auto;
 `;
+
 const HeaderArea = styled.View`
   justify-content: center;
   align-items:center;
@@ -16,7 +17,6 @@ const HeaderArea = styled.View`
    margin:10px;
 `;
 
-
 const HeaderText = styled.Text`
  font-size: 28px;
  color:#0000CD;
@@ -24,8 +24,6 @@ const HeaderText = styled.Text`
  margin-left:70px;
  font-weight:bold;
  margin-top: 20px
-
- 
 `;
 
 const  SocialView = styled.View`
@@ -47,9 +45,11 @@ width:80%;
 flex-direction: row;
 
 `;
+
 const ScrollView = styled.View `
  padding: 15px;
 `;
+
 const ListArea = styled.View`
   margin-top: 30px;
   margin-bottom: 30px;
@@ -80,9 +80,7 @@ const Input = styled.TextInput`
   color:#000000;
   margin-left:20px;
   margin: auto;
-  
 `;
-
 
 export {Container, ScrollView, ListArea, SocialView, Item,  SocialText ,LoginIcon,
    SearchView, InputArea, Input ,  HeaderArea, HeaderText}

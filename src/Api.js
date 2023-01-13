@@ -1,9 +1,8 @@
-  const API = 'https://aad3-2804-1254-8160-8800-b83b-bb53-b9c4-9091.sa.ngrok.io/thservicesApiRest/public/';
+const API = 'https://e258-2804-1254-81d3-1b00-2d04-fa8c-ad60-f613.sa.ngrok.io/thservicesApiRest/public/';
 
 export default {
 
-    //Auth
-    checkToken:async (token) => {
+    checkToken: async (token) => {
         const req = await fetch(`${API}api/auth/refresh`, {
             method: 'POST',
             headers:{
@@ -14,12 +13,11 @@ export default {
            });
            
        const json = await req.json();
-       return json;
-       
+       return json;  
     },
 
 
-    SignIn:async (email, password) => {
+    SignIn: async (email, password) => {
        const req = await fetch(`${API}api/auth/login`, {
         method: 'POST',
         headers:{
@@ -27,15 +25,12 @@ export default {
             'Content-Type': 'application/json'
         },
         body:JSON.stringify({email,password})
-
        });
-       
        const json = await req.json();
-       return json;
-       
+       return json; 
     },
 
-    SignUp:async ( name, email, password, photo) => {
+    SignUp: async ( name, email, password, photo) => {
         const req = await fetch(`${API}api/auth/register`,{
            method:'POST',
            headers:{
@@ -45,11 +40,10 @@ export default {
            body:JSON.stringify({name, email, password, photo})
         });
         const json = await req.json();
-        console.log(json);
         return json;
      },
 
-    logout:async (token) => {
+    logout: async (token) => {
        const req = await fetch(`${API}api/auth/logout`, {
          method: 'POST',
          headers:{
@@ -74,11 +68,8 @@ export default {
         const json = await req.json();
         return json;
     },
-    // End Auth
-
-    //Cient
+    
     getClient: async (id, token) => {
-       
         const req = await fetch(`${API}api/page/client/${id}`, {
             method: 'GET',
             headers:{
@@ -90,9 +81,7 @@ export default {
         const json = await req.json();
         return json;
     },
-    //End Client
-
-    //Testimonial
+    
       getTestimonial: async (ClientId) =>{
         const req = await fetch(`${API}api/page/commentary/${ClientId}`, {
             method: 'GET',
@@ -104,9 +93,8 @@ export default {
         const json = await req.json();
         return json;
       },
-    //End
+   
 
-    // Company
     getCompany: async (client_id, token) => { 
         const req = await fetch(`${API}api/page/company/${client_id}`, {
             method: 'GET',
@@ -119,10 +107,8 @@ export default {
         const json = await req.json();
         return json;
     },
-    //End company
+  
 
-
-    //Public announcement
     getAnnouncements: async () => {
         const req = await fetch(`${API}api/page/announcement`, {
             method: 'GET',
@@ -146,10 +132,8 @@ export default {
         const json = await req.json();
         return json;   
     },
-    //End public announcement
 
-
-   //Favorite
+   
     getFavorite: async (id, token) => {
         const req = await fetch(`${API}api/page/favorite/${id}`, {
             method: 'GET',
@@ -193,7 +177,6 @@ export default {
         return json;   
     },
 
-    //End favorite
     createGallery: async (imgOne, token) =>{
       const req = await fetch(`${API}api/page/gallery`,{
         method: 'POST',
@@ -237,7 +220,6 @@ export default {
         return json;
     },
 
-    //Geolocalization
     CreateGeolocalization: async ( latitude, longitude, companie_id, token ) => {
         const req = await fetch(`${API}api/page/geolocalization`, {
             method: 'POST',
@@ -253,10 +235,8 @@ export default {
         return json;
 
     },   
-//End
 
-//Schedule
-    createSchedule: async (date, time, descrition, client_id, authClient_id, status, token) => {
+    createSchedule: async (title, date, time, descrition, client_id, authClient_id, status, token) => {
          const req = await fetch(`${API}api/page/schedule`, {
             method: 'POST',
             headers:{
@@ -264,7 +244,7 @@ export default {
                  "Content-Type": "application/json",
                  'Authorization':` Bearer ${token}`
             },
-            body:JSON.stringify({date, time, descrition, client_id, authClient_id, status})
+            body:JSON.stringify({title, date, time, descrition, client_id, authClient_id, status})
          });
 
          const json = await req.json();
@@ -283,8 +263,20 @@ export default {
         });
         const json = await req.json();
         return json;
+    },
+    deleteShedules: async(id, token)=>{
+        const req = await fetch(`${API}api/page/schedule/${id}`, {
+            method: 'DELETE',
+            headers:{
+                 Accept: 'application/json',
+                 "Content-Type": "application/json",
+                 'Authorization':` Bearer ${token}`
+            },
+        
+        });
+        const json = await req.json();
+        return json;
     }
-    //End
 }
 
 

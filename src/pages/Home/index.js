@@ -2,16 +2,12 @@ import {RefreshControl, ScrollView} from 'react-native';
 import Api from '../../Api';
 import {useNavigation } from '@react-navigation/native';
 import {useContext, useEffect, useState } from 'react';
-import AnuncioItens from '../../components/AnuncioItens';
-
 import Facebook from 'react-native-vector-icons/AntDesign';
 import Instragram from 'react-native-vector-icons/AntDesign';
 import Twitter from 'react-native-vector-icons/AntDesign';
-
-
 import Input from '../../components/Input';
+import ListAnnouncements from '../../components/listAnnouncements';
 import { PhotoContext } from '../../contexts/Photo';
-
 import{ Container,
         HeaderArea,
         SocialView,
@@ -19,7 +15,6 @@ import{ Container,
         SocialText,
         HeaderText,
         LoginIcon,
-       
   } from './style';
 
 export default (props) => {
@@ -91,25 +86,22 @@ export default (props) => {
                   <Twitter name='twitter' size={25} color='#4169E1'/>
                 </Item>
              </SocialView>
-             <Input  
-                    placeholder="Buscar"
+             <Input placeholder="Buscar"
                     value={search}
                     onChangeText={e=>setSerarch(e)}
                     Icon="search"
-                    width="80%"
-                  />
-                      
-          </HeaderArea>
+                    width="80%"/>      
+             </HeaderArea>
              <LoginIcon  style={{display: loginIcon==='flex'? 'flex': 'none'}} size="large" color="#000"/>
-           
-             {acions.length > 0 && (<ScrollView refreshControl={
+               {acions.length > 0 && (
+               <ScrollView refreshControl={
                  <RefreshControl refreshing={refresh} onRefresh={refreshActive}/>}> 
-                     {list.map((item,k) =>( 
-                       <AnuncioItens
-                         key={k} data={item} 
-                         link={link}
-                         acionar={()=>handleButtonProfile(item)}/> ))}  
-                    </ScrollView>)} 
-        </Container>
+                    {list.map((item,k) =>( 
+                      <ListAnnouncements
+                        key={k} data={item} 
+                        link={link}
+                        acionar={()=>handleButtonProfile(item)}/> ))}  
+                </ScrollView>)} 
+         </Container>
     )
 };

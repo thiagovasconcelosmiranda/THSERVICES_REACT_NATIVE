@@ -2,6 +2,8 @@ import styled from "styled-components/native";
 import Edit from 'react-native-vector-icons/Feather';
 import Delete from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Api from "../Api";
 
 
 
@@ -73,7 +75,7 @@ const BoldText = styled.Text`
   font-weight: bold;
 `;
 
-export default ({item}) => {
+export default ({item, button}) => {
   const [backgroud, setBackgroud] = useState('');
 
   useEffect(()=>{
@@ -82,13 +84,14 @@ export default ({item}) => {
     }else{
       setBackgroud('red');
     }
-  },[]);
+  },[]); 
 
     return( 
         <ViewScheadule>
              <TimeView> 
                 <DateTimeText>{item.created_at}</DateTimeText>
              </TimeView>
+             <ItemText><BoldText>{item.title}</BoldText></ItemText>
              <AlignView>
               <Colunn>
                 <ItemView>
@@ -97,11 +100,9 @@ export default ({item}) => {
                 <ItemView>
                       <ItemText><BoldText>Hora:</BoldText> {item.time}hs</ItemText>
                   </ItemView>
-
                   <ItemView style={{backgroundColor: backgroud}}>
                     <ItemText style={{color: '#fff', marginLeft:5}}>{item.status}</ItemText>
                   </ItemView>
-                  
                 </Colunn>
                 <Colunn>
                 <ItemText style={{fontWeight: 'bold'}}>Descrição:</ItemText>
@@ -110,7 +111,7 @@ export default ({item}) => {
                     <ItemTouch>
                         <Edit name="edit" size={40} color='blue'/>
                     </ItemTouch>
-                    <ItemTouch>
+                    <ItemTouch onPress={button}>
                         <Delete name="delete-outline" size={45} color='red'/>
                     </ItemTouch>                   
                  </ItemIcon>

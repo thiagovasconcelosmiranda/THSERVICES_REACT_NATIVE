@@ -18,27 +18,19 @@ import * as Location from 'expo-location';
 import Api from '../../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
 export default (props) => {
-
    const navigation = useNavigation();
    const [regionDb, setRegionDb] = useState([]);
    const [location, setLocation] = useState([]);
    const [locationUser, setLocationUser] = useState(false);
    const [region, setRegion] = useState(null);
    
-  
-
   const hendleButtonLeft = () =>{
       navigation.navigate('MainTab');
   }
 
-
   useEffect(()=>{
-   
     (async () => {
-      
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
            setErrorMsg('Permission to access location was denied');
@@ -46,22 +38,13 @@ export default (props) => {
       }
           })();
           getGeolocalization(props.route.params.item);
-  
   },[]);
 
-
-  //Fazer rastreamento de usuário
-
   const handleLocalize = async (e) =>{
-    const token = await AsyncStorage.getItem('token')
-
-   // const token = await AsyncStorage('token');
     if(!regionDb.id){
-        setLocationUser(true)
-        //console.log(e.nativeEvent.coordinate.latitude)
+        setLocationUser(true);
         let location = await Location.getCurrentPositionAsync({});
         if(location.coords){
-             
             let latitudeText = JSON.stringify(location.coords.latitude);
             let longitudeText = JSON.stringify(location.coords.longitude);
             alert(longitudeText);
@@ -72,8 +55,6 @@ export default (props) => {
          }
       }
   }
-
- 
 
   const getGeolocalization = async (announcement) => { 
      const token = await AsyncStorage.getItem('token');
@@ -90,27 +71,21 @@ export default (props) => {
                   longitudeDelta: 0.0421
               })
                 setRegionDb(geolocalization)
-
               }else{
                 alert("Anuncio sem rastreamento!");
-                 console.log(location);
               }
-
-            }
+           }
        }
-    }
-
+     }
   }
       
-
   return (
     <Container>
          <HeaderView>
             <ItemLeft onPress={hendleButtonLeft}>
             <Left name='arrowleft'
                   size={30} color="#000"
-                  style={{marginLeft:40}}
-                  />
+                  style={{marginLeft:40}}/>
             </ItemLeft>
             <ItemLeft>
             <HeaderText>Localize</HeaderText>
@@ -118,7 +93,6 @@ export default (props) => {
             <ItemLeft onPress={()=>createLocation()}>
             <HeaderText>Atualizar</HeaderText>
             </ItemLeft>
-
          </HeaderView>
          <MapView style={{width: '100%', height: '60%' }}
                  initialRegion={region}
@@ -126,9 +100,7 @@ export default (props) => {
                  minZoomLevel={17}
                  zoomEnabled={true}
                  loadingEnabled={true}
-                 onPress={(e)=>handleLocalize(e)}
-                 />
-          
+                 onPress={(e)=>handleLocalize(e)}/>
            <LocationView>
             <TitleText>Dados de localização</TitleText>
              {regionDb != '' ? (
@@ -140,8 +112,7 @@ export default (props) => {
                    <LocationText> <Latitude>Latitude:  </Latitude>{location.latitude}</LocationText>
                    <LocationText> <Latitude>Longitude:  </Latitude>{location.longitude}</LocationText>
                 </ScrollView>
-                )}
-                
+                )}  
            </LocationView>
     </Container>
   );

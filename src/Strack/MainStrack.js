@@ -11,6 +11,7 @@ import Upload from '../pages/Uploud';
 import Maps from "../pages/Maps";
 import Navigation from "../pages/Navigation";
 import Schedule from "../pages/Schedule";
+import Client from "../pages/Client";
 
 
 const Stack = createStackNavigator();
@@ -31,6 +32,7 @@ export default () => (
         <Stack.Screen name="Maps" component={Maps}/>
         <Stack.Screen name="Navigation" component={Navigation}/>
         <Stack.Screen name="Schedule" component={Schedule}/>
-        
+        <Stack.Screen name="Client" component={Client}/>
+
     </Stack.Navigator>
 );

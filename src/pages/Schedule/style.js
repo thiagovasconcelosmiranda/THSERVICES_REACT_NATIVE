@@ -32,9 +32,17 @@ const HeaderText = styled.Text`
 const ItemView = styled.View`
  width: 100%;
  flex: 1;
- background-color: #999;
+ background-color:#D3D3D3;
  margin-top: -10px;
 `;
+
+const ImageItem = styled.View`
+ width: 100%;
+ flex-direction: row;
+ justify-content: center;
+ margin-top: 10px;
+`;
+
 const AlignItem = styled.View`
 width: 100%;
 flex-direction: row;
@@ -50,4 +58,4 @@ const Item = styled.View`
 
 
 
-export {Container, HeaderView, ItemLeft, ItemText, HeaderText, ItemView, Item, AlignItem}
+export {Container, HeaderView, ItemLeft, ItemText, HeaderText, ItemView, ImageItem, Item, AlignItem}

@@ -1,5 +1,5 @@
 
-import styled from "styled-components";
+import styled from "styled-components/native";
 
 
 const Container = styled.SafeAreaView`
@@ -49,7 +49,6 @@ justify-content: center;
 align-items: center;
 margin-left: auto;
 margin-right: auto;
-
 `;
 
 
@@ -57,19 +56,18 @@ const CustomButtonText = styled.Text `
  font-size:  18px;
  color:#FFFFFF;
 `;
-const LoginIcon = styled.ActivityIndicator`
-`;
+
+const LoginIcon = styled.ActivityIndicator``;
+
 const ImageAlign = styled.View`
-  width:100%;
-  
-`;
+ width:100%;
+  `;
 
  const SignMessageButton = styled.TouchableOpacity`
    flex-direction:row;
    justify-content: center;
    margin-top: 20px;
    margin-bottom:20px;
-
 `;
 
 const SignMessageButtonTextBold = styled.Text `
@@ -79,9 +77,7 @@ font-weight:bold;
 margin-left: 8px;
 `;
 
-
 export {Container, InputArea, CustomUpload, UploadText, CustomButtom,
-         CustomButtonText, LoginIcon, ImageAlign,
-         AlignButton, SignMessageButton,
+         CustomButtonText, LoginIcon, ImageAlign, AlignButton, SignMessageButton,
          SignMessageButtonTextBold, ImageView
         }

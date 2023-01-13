@@ -4,8 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Api from '../../Api';
 import Testimonial from '../../components/Testimonial';
 import { PhotoContext } from '../../contexts/Photo';
-import { ModalSched } from '../../components/Modal';
-
+import { ModalSched } from '../../components/Modals';
 
 import Left from 'react-native-vector-icons/AntDesign';
 
@@ -246,10 +245,8 @@ export default (props) => {
                                     <TestimonialButton onPress={handleTestemonial}>
                                        <TestimonialText>{textTestemonial}</TestimonialText>
                                      </TestimonialButton>)}
-                                 
                             <ScrollView>
                             <TestimonialView>
-                                 
                                      {testimonialBoolean === true && ( 
                                          listTestimonial.map((item, k)=>(
                                           <Testimonial key={k}
@@ -257,14 +254,13 @@ export default (props) => {
                                            commentary={item.commentary}
                                            note={item.note}/>
                                        )))}
-                                    
                                   </TestimonialView> 
                            <FooterText>Todos os direitos reservados</FooterText>
                      </ScrollView>
                   </InfoView> 
                   <ModalSched 
                      dat={new Date()}
-                     clientId={listAnnouncement.client_id}
+                     listAnnouncement={listAnnouncement}
                      authId={Auth.id}
                      styleActive={styleActive}
                   />

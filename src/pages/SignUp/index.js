@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import Api from '../../Api';
 import * as Animatable from 'react-native-animatable';
 import Alert from '../../components/Alert';
-
 import { Container, 
          InputArea,
          CustomUpload,
@@ -17,15 +16,14 @@ import { Container,
          SignMessageButton,
          LoginIcon , 
          ImageView
-         } from './style';
+        } from './style';
 
-         import '../../utils/i18n';
-         import { useTranslation } from 'react-i18next';
-         import UserImage from 'react-native-vector-icons/FontAwesome5';
+ import '../../utils/i18n';
+ import { useTranslation } from 'react-i18next';
+ import UserImage from 'react-native-vector-icons/FontAwesome5';
 
 export default () => {
   const navigation = useNavigation();
-
   const [state, setState] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -33,21 +31,19 @@ export default () => {
   const [reppassword, setRepassword] = useState('');
   const [message, setMessage] = useState('');
   const [styleDisplay, setStyleDisplay] = useState('none');
-
   const{ t, i18n} = useTranslation();
   const[image, setImage] = useState(null);
 
   useEffect(()=>{
     permission();
   },[]);
-
-  //active alert 
+ 
   const alertMessage = (msg) =>{
     setMessage(msg);
     setStyleDisplay('flex');
     setTimeout(function(){
       setStyleDisplay('none');
-    },75000);
+    },82000);
     setState(false);
   }
 
@@ -55,9 +51,9 @@ export default () => {
     const result = await ImagePicker.requestCameraPermissionsAsync();
 
    if(!result !== 'granted'){
-     //alert('Permission denied!');
+     alert('Permission denied!');
    }
-}
+ }
 
   const handleButtonUpload = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -78,7 +74,6 @@ export default () => {
     setState(true);
     
     if(name != '' && email != '' && password != '' && reppassword != ''){
-       
       if(password === reppassword){
           const res = await Api.SignUp(name, email, password, image);
           if(res.user.length > 0){
@@ -86,16 +81,12 @@ export default () => {
           }else if(res.message){
               alertMessage(res.message)
           }
-
         }else{
           alertMessage("Passwords não confere!");
         }
-      
     }else{
-      alertMessage('Empty space!')
-      
+      alertMessage('Empty space!');
     }
-  
   }
 
   const  hangleButtonSignIn = () => {
@@ -122,24 +113,24 @@ export default () => {
 
                  <Animatable.View delay={600} animation="fadeInUp"> 
                   <InputArea >
-                    <CustomUpload onPress={handleButtonUpload}  style={{display: reppassword === ''? 'none' : 'flex'}} >
+                    <CustomUpload onPress={handleButtonUpload} 
+                      style={{display: reppassword === ''? 'none' : 'flex'}} >
                      {image === null &&  (
-                        <UserImage name="user-circle" size={35} color="#FFF"/>
+                        <UserImage name="user-circle"
+                         size={35} color="#FFF"/>
                      )}
 
                       {image !== null &&  (
-                        <Image source={{uri: image}} style={{width:50, height:50, borderRadius: 25}} />
+                        <Image source={{uri: image}} 
+                         style={{width:50, height:50, borderRadius: 25}} />
                      )}
-                      
 
                       <UploadText>Upload de imagem</UploadText>
                   </CustomUpload> 
-
                   <Input placeholder="Digite seu nome"
                    onChangeText={t=>setName(t)}
                    value={name}
-                   Icon="name"
-                   />
+                   Icon="name"/>
                     
                   <Input placeholder={t('Digite seu email')}
                    onChangeText={t=>setEmail(t)}
@@ -151,14 +142,14 @@ export default () => {
                     password={true}
                     onChangeText={t=>setPassword(t)}
                     value={password}
-                    Icon="password"
-                  />
+                    Icon="password"/>
+
                   <Input placeholder="Confirma sua senha"
                      password={true}
                      onChangeText={t=>setRepassword(t)}
                      value={reppassword}
-                     Icon="password"
-                  />
+                     Icon="password"/>
+
                   <CustomButtom>
                   {state === true && (
                 <CustomButtom disabled={true} onPress={handleSignUpClick}>
@@ -176,7 +167,6 @@ export default () => {
                     <SignMessageButtonTextBold>{t('Faça seu acesso')}</SignMessageButtonTextBold>
                   </SignMessageButton>
                  </InputArea>
-                
               </Animatable.View>
           </Container>
     )

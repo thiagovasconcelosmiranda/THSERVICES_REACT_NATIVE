@@ -47,9 +47,9 @@ export default ({ state , navigation}) => {
             <Help name="help-circle" size={30} color="#000"/>
             <Text>Ajuda</Text>
           </Item>
-         <Item  style={{opacity: state.index=== 3? 1 : 0.3}} onPress={()=>goTo('Menu')} >
+         <Item  style={{opacity: state.index=== 3? 1 : 0.3}} onPress={()=>goTo('Option')} >
              <Servico name="navicon" size={40} color="#000"/>
-             <Text>Serviços</Text>
+             <Text>Opções</Text>
          </Item>
         </TabArea>
 

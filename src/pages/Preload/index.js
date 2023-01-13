@@ -7,35 +7,32 @@ import { Image } from "react-native";
 
 
 export default () =>{
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
-useEffect(()=>{
-   const checkToken = async()=>{
-      const token = await AsyncStorage.getItem('token');
+  useEffect(()=>{
+     const checkToken = async()=>{
+     const token = await AsyncStorage.getItem('token');
     
      if(token){
+        const res = await Api.checkToken(token);
      
-      const res = await Api.checkToken(token);
-     
-   if(res.data.length > 0){
-      navigation.reset({ 
-         routes:[{name: 'MainTab'}]
-      });
-   }else{
+        if(res.data.length > 0){
+           navigation.reset({ 
+              routes:[{name: 'MainTab'}]
+           });
+        }else{
+           navigation.reset({ 
+             routes:[{name: 'SignIn'}]
+            });
+        }
+     }else{
        navigation.reset({ 
          routes:[{name: 'SignIn'}]
        });
-   }
-     
-     } else{
-      navigation.reset({ 
-         routes:[{name: 'SignIn'}]
-      });
      }
    }  
     checkToken();
-
-},[])
+  },[])
 
     return (
       <Container>

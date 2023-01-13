@@ -5,7 +5,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Favorite from '../pages/Favorite';
 import Home from '../pages/Home';
 import Help from "../pages/Help";
-import  Menu from '../pages/Menu';
+import Option from "../pages/Option";
+
 
 
 const Tabs = createBottomTabNavigator();
@@ -19,8 +20,7 @@ export default () => (
            <Tabs.Screen name="Home" component={Home}/>
            <Tabs.Screen name="Favorite" component={Favorite}/>
            <Tabs.Screen name="Help" component={Help}/>
-           <Tabs.Screen name="Menu" component={Menu}/>
-           
+           <Tabs.Screen name="Option" component={Option}/>
        </Tabs.Navigator>
 
 )
