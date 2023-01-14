@@ -38,8 +38,8 @@ export default ({placeholder, value, onChangeText, password, Icon, width, height
             value={value}
             onChangeText={onChangeText}
             secureTextEntry={password}
-           
-         />
+           />
+
           {Icon === 'name' && (
            <Name name="user" size={30} color="#000"/> 
         )}

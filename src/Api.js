@@ -1,4 +1,4 @@
-const API = 'https://e258-2804-1254-81d3-1b00-2d04-fa8c-ad60-f613.sa.ngrok.io/thservicesApiRest/public/';
+const API = 'https://c58e-2804-1254-81d3-1b00-b48d-3a5-f607-41f8.sa.ngrok.io/thservicesApiRest/public/';
 
 export default {
 
@@ -30,14 +30,14 @@ export default {
        return json; 
     },
 
-    SignUp: async ( name, email, password, photo) => {
+    SignUp: async ( name, email, password) => {
         const req = await fetch(`${API}api/auth/register`,{
            method:'POST',
            headers:{
            Accept: 'application/json',
                    'Content-Type': 'application/json'
            },
-           body:JSON.stringify({name, email, password, photo})
+           body:JSON.stringify({name, email, password})
         });
         const json = await req.json();
         return json;

@@ -1,8 +1,7 @@
 import styled from "styled-components/native";
 
-
 const Container = styled.SafeAreaView`
-background-color: #111;
+background-color: #000;
 flex: 1;
 justify-content: center;
 align-items: center;

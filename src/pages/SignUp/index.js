@@ -1,6 +1,5 @@
-import{ useEffect, useState } from 'react';
+import{useState } from 'react';
 import { Image, ScrollView} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
 import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import Api from '../../Api';
@@ -8,19 +7,21 @@ import * as Animatable from 'react-native-animatable';
 import Alert from '../../components/Alert';
 import { Container, 
          InputArea,
-         CustomUpload,
-         UploadText,
+         CaractereView,
+         AlignCaracte,
+         CaracteText,
+         AlignValidate,
          CustomButtom,
          SignMessageButtonTextBold,
          CustomButtonText,
          SignMessageButton,
-         LoginIcon , 
+         LoginIcon, 
          ImageView
         } from './style';
-
  import '../../utils/i18n';
  import { useTranslation } from 'react-i18next';
- import UserImage from 'react-native-vector-icons/FontAwesome5';
+ import Check from 'react-native-vector-icons/Entypo';
+ import Close from 'react-native-vector-icons/AntDesign';
 
 export default () => {
   const navigation = useNavigation();
@@ -28,65 +29,82 @@ export default () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [validatePassword, setValidatePassword] = useState('');
   const [reppassword, setRepassword] = useState('');
+
+  const [validateRepPasswordBool, setValidateRepPasswordBool] = useState(false)
+
   const [message, setMessage] = useState('');
   const [styleDisplay, setStyleDisplay] = useState('none');
   const{ t, i18n} = useTranslation();
-  const[image, setImage] = useState(null);
+  const[validateInput, setValidateInput] = useState({
+    case: false,
+    caseCaractere: false,
+    number: false,
+    length: false
+  });
 
-  useEffect(()=>{
-    permission();
-  },[]);
- 
-  const alertMessage = (msg) =>{
+  const segureText = (password) => {
+    setPassword(password);
+      const regexUperCase = RegExp(/(?=,*[A-Z]).+$/);
+      const regexCaractereCase = RegExp(/\W|_/);
+      const regexNumber = RegExp(/(?=,*[0-9]).+$/);
+      const length = password.length >= 7;
+
+      setValidateInput({
+        case: regexUperCase.test(password),
+        caseCaractere: regexCaractereCase.test(password),
+        number: regexNumber.test(password),
+        length: length
+      });
+      validate(password);
+    }
+
+    const validate = (pass) =>{
+      if(validateInput.case && validateInput.length && 
+        validateInput.number && validateInput.caseCaractere){
+          setValidatePassword(pass); 
+      }
+    }
+
+    const valRepPassword = (e) => {
+      setRepassword(e)
+      if(e === validatePassword){
+        setValidateRepPasswordBool(true);
+      }else{
+        setValidateRepPasswordBool(false);
+      }
+    }
+
+   const alertMessage = (msg) =>{
     setMessage(msg);
     setStyleDisplay('flex');
     setTimeout(function(){
       setStyleDisplay('none');
-    },82000);
+    },92000);
     setState(false);
   }
 
-  const permission = async () =>{
-    const result = await ImagePicker.requestCameraPermissionsAsync();
-
-   if(!result !== 'granted'){
-     alert('Permission denied!');
-   }
- }
-
-  const handleButtonUpload = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing:true,
-      aspect:[4,3],
-      quality: 1
-    });
-
-    if(result != ''){
-      setImage(result.uri);
-      console.log(result.uri);
-    }    
-  }
-
   const handleSignUpClick = async() =>{
-  
-    setState(true);
-    
-    if(name != '' && email != '' && password != '' && reppassword != ''){
-      if(password === reppassword){
-          const res = await Api.SignUp(name, email, password, image);
-          if(res.user.length > 0){
-              navigation.navigate("SignIn");
-          }else if(res.message){
-              alertMessage(res.message)
-          }
-        }else{
-          alertMessage("Passwords não confere!");
+      setState(true);
+      if(name != '' && email != '' &&  validatePassword!= '' && reppassword != ''){
+        if(validateRepPasswordBool){
+          const res = await Api.SignUp(name, email, validatePassword);
+         if(res.data.user){
+          setState(false);
+          navigation.reset({ 
+            routes:[{name: 'SignIn'}]
+          });
+
+         }
         }
-    }else{
-      alertMessage('Empty space!');
-    }
+      }else{
+        alertMessage('Empty space!');
+        setState(false);
+      }
+    
+    
+
   }
 
   const  hangleButtonSignIn = () => {
@@ -94,7 +112,7 @@ export default () => {
       routes:[{name: 'SignIn'}]
 
       });
-  } 
+    } 
     return(
           <Container>
              <ImageView>
@@ -103,71 +121,87 @@ export default () => {
                     source={require('../../img/logotipo.png')} 
                     style={{ width: 170, height: 140,
                     marginRight: 'auto', marginLeft:'auto', margin:'auto', marginTop:"auto"}}/>
-                    </ImageView>
-
-                    <Alert 
-                      styleDisplay={styleDisplay}
-                      message={message}
-                      background='red'
-                      />
-
-                 <Animatable.View delay={600} animation="fadeInUp"> 
-                  <InputArea >
-                    <CustomUpload onPress={handleButtonUpload} 
-                      style={{display: reppassword === ''? 'none' : 'flex'}} >
-                     {image === null &&  (
-                        <UserImage name="user-circle"
-                         size={35} color="#FFF"/>
-                     )}
-
-                      {image !== null &&  (
-                        <Image source={{uri: image}} 
-                         style={{width:50, height:50, borderRadius: 25}} />
-                     )}
-
-                      <UploadText>Upload de imagem</UploadText>
-                  </CustomUpload> 
-                  <Input placeholder="Digite seu nome"
-                   onChangeText={t=>setName(t)}
-                   value={name}
-                   Icon="name"/>
-                    
-                  <Input placeholder={t('Digite seu email')}
-                   onChangeText={t=>setEmail(t)}
-                   value={email}
-                   Icon="email"
-                  />
+              </ImageView>
+              <Alert 
+                  styleDisplay={styleDisplay}
+                  message={message}
+                  background='red'/>
+              <Animatable.View delay={600} animation="fadeInUp"> 
+                   <InputArea>
+                    <ScrollView>
+                       <Input placeholder="Digite seu nome"
+                          onChangeText={t=>setName(t)}
+                          value={name}
+                          Icon="name"/>  
+                       <Input placeholder={t('Digite seu email')}
+                          onChangeText={t=>setEmail(t)}
+                          value={email}
+                          Icon="email"/>
                  
-                  <Input placeholder={t('Digite seu senha')}
-                    password={true}
-                    onChangeText={t=>setPassword(t)}
-                    value={password}
-                    Icon="password"/>
+                        <Input placeholder={t('Digite seu senha')}
+                           password={true}
+                           onChangeText={(e)=>{segureText(e)}}
+                           value={password}
+                           Icon="password"/>
+                            {password && (
+                              <CaractereView>
+                                <AlignCaracte>
+                                  <CaracteText> Minino 6 caractere</CaracteText>
+                                   {validateInput.length ? (
+                                    <Check name='check' size={20} color="green" />
+                                   ): (<Close  name='close' size={20} color="red"/>)}
+                                </AlignCaracte>
+                               <AlignCaracte>
+                                 <CaracteText>Números</CaracteText>
+                                 {validateInput.number ? (
+                                  <Check name='check' size={20} color="green" />
+                                  ): (<Close  name='close' size={20} color="red"/>)}
+                               </AlignCaracte>
+                               <AlignCaracte>
+                                 <CaracteText>Maiúscula</CaracteText>
+                                 {validateInput.case ? (
+                                  <Check name='check' size={20} color="green" />
+                                  ): (<Close  name='close' size={20} color="red"/>)}
+                             </AlignCaracte>
+                             <AlignCaracte>
+                               <CaracteText>Caractere especiais</CaracteText>
+                               {validateInput.caseCaractere ? (
+                                 <Check name='check' size={20} color="green" />
+                                 ): (<Close  name='close' size={20} color="red"/>)}
+                            </AlignCaracte>
+                        </CaractereView>)}
+                        <Input placeholder="Confirma sua senha"
+                           password={true}
+                           onChangeText={(t)=>{valRepPassword(t)}}
+                           value={reppassword}
+                           Icon="password"/>
+                           {reppassword && (
+                             <AlignValidate>
+                               <CaracteText>Senha confere</CaracteText>
+                               {validateRepPasswordBool ? (<Check name='check' size={20} color="green" />):(
+                               <Close  name='close' size={20} color="red"/>)}
+                               
+                              </AlignValidate>
+                           )}
+                         <CustomButtom>
+                          {state === true && (
+                         <CustomButtom disabled={true} onPress={handleSignUpClick}>
+                         <CustomButtonText><LoginIcon size="large" color="#FFFFFF"/></CustomButtonText>
+                       </CustomButtom> 
+                       )}
 
-                  <Input placeholder="Confirma sua senha"
-                     password={true}
-                     onChangeText={t=>setRepassword(t)}
-                     value={reppassword}
-                     Icon="password"/>
-
-                  <CustomButtom>
-                  {state === true && (
-                <CustomButtom disabled={true} onPress={handleSignUpClick}>
-                    <CustomButtonText><LoginIcon size="large" color="#FFFFFF"/></CustomButtonText>
-                </CustomButtom> 
-              ) }
-
-               {state === false && (
-                  <CustomButtom onPress={handleSignUpClick}>
-                      <CustomButtonText>Cadastrar</CustomButtonText>
-                  </CustomButtom> 
-               ) }
-                  </CustomButtom>
+                     {state === false && (
+                      <CustomButtom onPress={handleSignUpClick}>
+                         <CustomButtonText>Cadastrar</CustomButtonText>
+                     </CustomButtom> 
+                     )}
+                    </CustomButtom>
                   <SignMessageButton onPress={()=>hangleButtonSignIn()} >
                     <SignMessageButtonTextBold>{t('Faça seu acesso')}</SignMessageButtonTextBold>
                   </SignMessageButton>
-                 </InputArea>
-              </Animatable.View>
-          </Container>
+                </ScrollView>
+              </InputArea>
+            </Animatable.View>
+        </Container>
     )
 }

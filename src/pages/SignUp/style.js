@@ -15,17 +15,6 @@ const ImageView = styled.View`
  top: 4px;
 `;
 
-const CustomUpload = styled.TouchableOpacity`
- flex-direction: row;
-align-items: center;
-`;
-
-const UploadText = styled.Text`
- color: #FFF;
- margin-left: 10px;
- font-size: 20px;
-`;
-
 const InputArea = styled.View`
    width: 80%;
    margin-top:180px;
@@ -36,8 +25,31 @@ const InputArea = styled.View`
    border-top-right-radius:30px;
 `;
 
+const CaractereView = styled.View`
+ width: 100%;
+ margin: -20px;
+`;
+const AlignCaracte = styled.View`
+ flex-direction: row;
+ align-items: center;
+ margin: 5px;
+`;
+
+const CaracteText = styled.Text`
+ color: #fff;
+ font-size: 14px;
+ margin-left: 20px;
+`;
+
+const AlignValidate = styled.View`
+ flex-direction: row;
+ align-items: center;
+ margin-top: -20px;
+`;
+
 const AlignButton = styled.View`
   width:100%;
+  margin-top: 20px;
 `;
 
 const CustomButtom = styled.TouchableOpacity`
@@ -48,7 +60,7 @@ background-color: #268596;
 justify-content: center;
 align-items: center;
 margin-left: auto;
-margin-right: auto;
+margin-right: auto
 `;
 
 
@@ -77,7 +89,7 @@ font-weight:bold;
 margin-left: 8px;
 `;
 
-export {Container, InputArea, CustomUpload, UploadText, CustomButtom,
+export { Container, InputArea, CaractereView, AlignCaracte, CaracteText, AlignValidate,CustomButtom,
          CustomButtonText, LoginIcon, ImageAlign, AlignButton, SignMessageButton,
          SignMessageButtonTextBold, ImageView
         }

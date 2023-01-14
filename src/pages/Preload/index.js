@@ -3,13 +3,13 @@ import { Container, LoginIcon } from "./style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Api from "../../Api";
 import { useNavigation } from "@react-navigation/native";
-import { Image } from "react-native";
+import { Image, StatusBar } from "react-native";
 
 
 export default () =>{
   const navigation = useNavigation();
 
-  useEffect(()=>{
+   useEffect(()=>{
      const checkToken = async()=>{
      const token = await AsyncStorage.getItem('token');
     

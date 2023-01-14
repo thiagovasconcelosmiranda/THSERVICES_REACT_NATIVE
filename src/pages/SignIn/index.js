@@ -55,7 +55,7 @@ export default () => {
   setStyleDisplay('flex');
   setTimeout(function(){
     setStyleDisplay('none');
-  },82000);
+  },92000);
   setState(false);
 }
 
@@ -63,7 +63,7 @@ export default () => {
           setState(true);
          if(email != "" && password != ""){
           const res = await Api.SignIn(email, password);
-          console.log(res.data.error); if(res.data.token){
+           if(res.data.token){
             await AsyncStorage.setItem('token', res.data.token);
             navigation.navigate("MainTab");
           }else if(res.data.error){
